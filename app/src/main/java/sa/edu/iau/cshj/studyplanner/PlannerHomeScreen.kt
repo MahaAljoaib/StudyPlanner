@@ -8,9 +8,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.rememberScrollState
@@ -36,17 +36,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 
+
 data class PlannerUiState(
     val greeting: String = "Hello, Maha!",
     val totalTasks: Int = 7,
-    val completedTasks: Int = 3
+    val completedTasks: Int = 3,
+    val tasks: List<String> = emptyList()
 )
+
 
 
 @Composable
 fun PlannerHomeScreen(
     uiState: PlannerUiState,
     onCompleteTask: () -> Unit,
+    onTaskClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val progress = if (uiState.totalTasks > 0) {
@@ -167,6 +171,26 @@ fun PlannerHomeScreen(
                 }
             }
         }
+
+        Text(
+            text = "Your Study Tasks",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
+        )
+
+        uiState.tasks.forEach { title ->
+            Button(
+                onClick = { onTaskClick(title) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Text(
+                    text = title,
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+        }
     }
 }
 
@@ -179,7 +203,8 @@ private fun PlannerHomePreviewNothingDone() {
             uiState = PlannerUiState(
                 greeting = "Hello, Maha!",
                 totalTasks = 7,
-                completedTasks = 0
+                completedTasks = 0,
+                tasks = listOf("Review Kotlin Basics", "Prepare HCI Assignment", "Study Image Processing")
             ),
             onCompleteTask = {}
         )
@@ -194,7 +219,8 @@ private fun PlannerHomePreviewAllDone() {
             uiState = PlannerUiState(
                 greeting = "Hello, Maha!",
                 totalTasks = 7,
-                completedTasks = 7
+                completedTasks = 7,
+                tasks = listOf("Review Kotlin Basics", "Prepare HCI Assignment", "Study Image Processing")
             ),
             onCompleteTask = {}
         )
@@ -202,10 +228,24 @@ private fun PlannerHomePreviewAllDone() {
 }
 
 @Composable
-fun PlannerHomeRoute() {
-    var uiState by remember {
-        mutableStateOf(PlannerUiState())
-    }
+internal fun rememberPlannerUiState(): MutableState<PlannerUiState> = remember {
+    mutableStateOf(
+        PlannerUiState(
+            tasks = listOf(
+                "Review Kotlin Basics",
+                "Prepare HCI Assignment",
+                "Study Image Processing"
+            )
+        )
+    )
+}
+
+@Composable
+fun PlannerHomeRoute(
+    onTaskClick: (String) -> Unit = {},
+    plannerState: MutableState<PlannerUiState> = rememberPlannerUiState()
+) {
+    var uiState by plannerState
 
     PlannerHomeScreen(
         uiState = uiState,
@@ -215,7 +255,7 @@ fun PlannerHomeRoute() {
                     completedTasks = uiState.completedTasks + 1
                 )
             }
-        }
+        },
+        onTaskClick = onTaskClick
     )
 }
-
