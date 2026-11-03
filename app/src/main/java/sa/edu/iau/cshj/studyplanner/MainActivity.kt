@@ -2,6 +2,7 @@ package sa.edu.iau.cshj.studyplanner
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.setContent
 import sa.edu.iau.cshj.studyplanner.navigation.StudyPlannerApp
 import sa.edu.iau.cshj.studyplanner.ui.theme.StudyPlannerTheme
@@ -9,6 +10,7 @@ import sa.edu.iau.cshj.studyplanner.ui.theme.StudyPlannerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         setContent {
             StudyPlannerTheme {

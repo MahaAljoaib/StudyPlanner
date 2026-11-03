@@ -7,3 +7,6 @@ object PlannerHome
 
 @Serializable
 data class TaskDetail(val id: Int)
+
+@Serializable
+object Today

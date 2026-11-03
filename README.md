@@ -33,7 +33,8 @@ The application helps students organize their study tasks, track their progress,
 | Lab 5 | Task Details, Navigation Compose & Task Sharing | ✅ Completed |
 | Lab 6 | No implementation in this project | — |
 | Lab 7 | Part 4: reusable task rows, keyed LazyColumn, derived progress, saved state & previews | ✅ Code implemented and tested; paper sketch and submission pending |
-| Lab 8–15 | Upcoming Features & Improvements | 🔜 Upcoming |
+| Lecture 8 Build Guide | Today screen, ViewModel, StateFlow, loading, Snackbar & Help | ✅ Implemented and tested |
+| Labs 8–15 | Future lab assignments | 🔜 Upcoming |
 
 ## 🏗 Project Architecture
 
@@ -68,4 +69,18 @@ Run the current Lab 7 UI tests on a connected emulator with:
 
 ```sh
 ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=sa.edu.iau.cshj.studyplanner.StudyPlannerLab7Test,sa.edu.iau.cshj.studyplanner.StudyPlannerRotationTest
+```
+
+## Lecture 8 — Today
+
+Open **Today** from the top of the existing home screen. It loads three lecture sample tasks after 1.5 seconds, simulates saving for 300 ms, shows **Marked as done** on completion, and displays a tip through **Help**. The Today ViewModel survives rotation. **Back** returns to the existing Lab 7 home screen; its tasks, details and sharing remain available.
+
+Today has its own lecture sample list, separate from the existing five home tasks. Its repository simulates work and does not persist data. Closing the Today destination and opening it again creates a fresh ViewModel and loads again.
+
+Read the [stage-by-stage report and file list](docs/lecture8/Lecture8-Report.md), [verification results](docs/lecture8/Verification.md), [screenshots](docs/lecture8/screenshots), and [AI disclosure draft](docs/lecture8/AI-Use-Disclosure.md).
+
+Run the current lecture and Lab 7 regression tests on a connected emulator:
+
+```sh
+./gradlew :app:assembleDebug :app:testDebugUnitTest :app:lintDebug :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=sa.edu.iau.cshj.studyplanner.TodayViewModelTest,sa.edu.iau.cshj.studyplanner.TodayScreenTest,sa.edu.iau.cshj.studyplanner.TodayIntegrationTest,sa.edu.iau.cshj.studyplanner.StudyPlannerLab7Test,sa.edu.iau.cshj.studyplanner.StudyPlannerRotationTest
 ```

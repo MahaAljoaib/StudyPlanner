@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.saveable.listSaver
@@ -46,6 +49,7 @@ fun PlannerHomeScreen(
     uiState: PlannerUiState,
     onTaskClick: (Int) -> Unit,
     onDoneChange: (Int, Boolean) -> Unit,
+    onTodayClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val totalTasks = uiState.tasks.size
@@ -71,11 +75,15 @@ fun PlannerHomeScreen(
             Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
                 Spacer(modifier = Modifier.height(12.dp))
 
-                Text(
-                    text = "STUDY PLANNER",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "STUDY PLANNER",
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    TextButton(onClick = onTodayClick) { Text("Today") }
+                }
 
                 Text(
                     text = uiState.greeting,
@@ -179,6 +187,7 @@ internal val PlannerUiStateSaver = listSaver<PlannerUiState, Any>(
 @Composable
 fun PlannerHomeRoute(
     onTaskClick: (Int) -> Unit,
+    onTodayClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var uiState by rememberSaveable(stateSaver = PlannerUiStateSaver) {
@@ -192,6 +201,7 @@ fun PlannerHomeRoute(
                 if (task.id == id) task.copy(isDone = checked) else task
             })
         },
+        onTodayClick = onTodayClick,
         modifier = modifier
     )
 }
