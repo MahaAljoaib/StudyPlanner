@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 object PlannerHome
 
 @Serializable
-data class TaskDetail(val title: String)
+data class TaskDetail(val id: Int)

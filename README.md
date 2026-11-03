@@ -31,7 +31,9 @@ The application helps students organize their study tasks, track their progress,
 |---|---|---|
 | Lab 4 | Home Screen, UI State, Stateless Composables & Previews | ✅ Completed |
 | Lab 5 | Task Details, Navigation Compose & Task Sharing | ✅ Completed |
-| Lab 6–15 | Upcoming Features & Improvements | 🔜 Upcoming |
+| Lab 6 | No implementation in this project | — |
+| Lab 7 | Part 4: reusable task rows, keyed LazyColumn, derived progress, saved state & previews | ✅ Code implemented and tested; paper sketch and submission pending |
+| Lab 8–15 | Upcoming Features & Improvements | 🔜 Upcoming |
 
 ## 🏗 Project Architecture
 
@@ -55,3 +57,15 @@ Imam Abdulrahman Bin Faisal University
 ---
 
 *Developed for CSC402 – Mobile Application Programming | Academic Year 2026–2027*
+
+## Lab 7 — Part 4
+
+The existing Lab 5 project now uses five `StudyTask` items, stateless task rows, immutable completion updates and ID-based navigation. State is saved across rotation and navigation. The original theme, progress-card styling, task details and sharing are retained.
+
+See the [implementation and verification report](docs/lab7/Lab7-Report.md), [evidence screenshots](docs/lab7/screenshots), [paper-sketch guide](docs/lab7/P4.1-Paper-Sketch-Guide.md), and [AI disclosure draft](docs/lab7/AI-Use-Disclosure.md). The actual paper sketch/photo, student review of the disclosure log, and Blackboard submission remain pending.
+
+Run the current Lab 7 UI tests on a connected emulator with:
+
+```sh
+./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=sa.edu.iau.cshj.studyplanner.StudyPlannerLab7Test,sa.edu.iau.cshj.studyplanner.StudyPlannerRotationTest
+```

@@ -11,13 +11,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import sa.edu.iau.cshj.studyplanner.PlannerHomeRoute
 import sa.edu.iau.cshj.studyplanner.TaskDetailRoute
-import sa.edu.iau.cshj.studyplanner.rememberPlannerUiState
+import sa.edu.iau.cshj.studyplanner.model.sampleStudyTasks
 
 @Composable
 fun StudyPlannerApp() {
     val navController = rememberNavController()
-    // Keep progress above the NavHost so it survives a trip to task details.
-    val plannerState = rememberPlannerUiState()
 
     Scaffold { innerPadding ->
         NavHost(
@@ -27,16 +25,16 @@ fun StudyPlannerApp() {
         ) {
             composable<PlannerHome> {
                 PlannerHomeRoute(
-                    onTaskClick = { title ->
-                        navController.navigate(TaskDetail(title))
-                    },
-                    plannerState = plannerState
+                    onTaskClick = { id ->
+                        navController.navigate(TaskDetail(id))
+                    }
                 )
             }
             composable<TaskDetail> { backStackEntry ->
                 val detail = backStackEntry.toRoute<TaskDetail>()
                 TaskDetailRoute(
-                    title = detail.title,
+                    title = sampleStudyTasks().firstOrNull { it.id == detail.id }?.title
+                        ?: "Task not found",
                     onBackClick = { navController.popBackStack() }
                 )
             }
